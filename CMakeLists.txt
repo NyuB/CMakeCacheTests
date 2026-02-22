@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Enable testing
 include(cmake/testing.cmake)
+add_custom_target(AllTests)
 
 # LibA
 add_library(LibA LibA/Lib/A.cpp)
@@ -15,6 +16,7 @@ target_include_directories(LibA PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/LibA/Lib)
 add_executable(TestLibA LibA/Tests/TestA.cpp)
 target_link_libraries(TestLibA PRIVATE LibA)
 test_with_gtest(TestLibA)
+cache_test(TestLibA AllTests)
 
 # LibB
 add_library(LibB LibB/Lib/B.cpp)
@@ -24,6 +26,7 @@ target_include_directories(LibB PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/LibB/Lib)
 add_executable(TestLibB LibB/Tests/TestB.cpp)
 target_link_libraries(TestLibB PRIVATE LibB)
 test_with_gtest(TestLibB)
+cache_test(TestLibB AllTests)
 
 # LibAB - Library that depends on LibA and LibB
 add_library(LibAB LibAB/Lib/AB.cpp)
@@ -34,3 +37,4 @@ target_link_libraries(LibAB PUBLIC LibA LibB)
 add_executable(TestLibAB LibAB/Tests/TestAB.cpp)
 target_link_libraries(TestLibAB PRIVATE LibAB)
 test_with_gtest(TestLibAB)
+cache_test(TestLibAB AllTests)

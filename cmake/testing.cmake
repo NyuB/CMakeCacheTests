@@ -24,3 +24,14 @@ function(test_with_gtest TestTarget)
   gtest_discover_tests(${TestTarget}
                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endfunction()
+
+function(cache_test TestTarget TestTargetGroup)
+  set(REPORT_PATH ${CMAKE_BINARY_DIR}/${TestTargetGroup}/$<CONFIG>/${TestTarget}_report.json)
+  add_custom_command(
+    OUTPUT ${REPORT_PATH}
+    COMMAND ${TestTarget} --gtest_output=json:${REPORT_PATH}
+    DEPENDS ${TestTarget}
+  )
+  add_custom_target(${TestTarget}_report DEPENDS ${REPORT_PATH})
+  add_dependencies(${TestTargetGroup} ${TestTarget}_report)
+endfunction()
