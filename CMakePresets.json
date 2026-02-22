@@ -1,0 +1,39 @@
+{
+    "version": 3,
+    "vendor": {
+        "example.com/ExamplePresets": "1.0"
+    },
+    "configurePresets": [
+        {
+            "name": "ninja-clang",
+            "displayName": "Ninja Multi-Config with Clang",
+            "description": "Ninja Multi-Config generator with clang compiler",
+            "generator": "Ninja Multi-Config",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true
+            },
+            "binaryDir": "${sourceDir}/build"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "ninja-clang-relWithDebInfo",
+            "displayName": "RelWithDebInfo",
+            "configurePreset": "ninja-clang",
+            "configuration": "RelWithDebInfo",
+            "inheritConfigureEnvironment": true
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "ninja-clang-test",
+            "displayName": "Run Tests",
+            "configurePreset": "ninja-clang",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}
